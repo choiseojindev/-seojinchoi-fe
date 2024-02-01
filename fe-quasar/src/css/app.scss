@@ -1,0 +1,42 @@
+.q-field {
+    input::placeholder {
+      color: #A8ACC3;
+    }
+  }
+  
+  .field-flat .q-field__control {
+    height: 40px;
+    border-radius: 8px;
+    padding-left: 12px !important;
+    padding-right: 12px !important;
+  }
+  
+  .q-field__control {
+    height: 40px;
+    border-radius: 8px;
+    padding-left: 12px !important;
+    padding-right: 12px !important;
+  }
+  
+  .q-field--outlined {
+    .q-field__control:before {
+      border-color: #EFEFF4;
+    }
+    .q-field__control:hover:before {
+      border-color: #EFEFF4;
+    }
+  }
+  .q-field--dense {
+    .q-field__label {
+      top: 8px;
+    }
+    .q-field__control,
+    .q-field__marginal {
+      height: 36px;
+    }
+    .q-field__bottom {
+      font-size: 12px;
+    }
+  }
+
+//   A8ACC3
