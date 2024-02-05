@@ -1,5 +1,6 @@
 // page variables
 const Login = () => import(/* webpackChunkName: "login" */ "pages/login.vue")
+const CreateAccount = () => import(/* webpackChunkName: "createAccount" */ "pages/account/createAccount.vue")
 
 
 
@@ -17,6 +18,11 @@ const routes = [
     name : 'login',
     component : Login,
 
+  },
+  {
+    path : '/createAccount',
+    name : 'createAccount',
+    component : CreateAccount,
   },
 
   // Always leave this as last one,

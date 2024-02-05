@@ -1,3 +1,54 @@
+/* @button @버튼 */
+.q-btn {
+    // TODO: 버튼 사이즈 클래스에 따라 변경 필요
+    .q-icon {
+      font-size: 14px;
+    }
+  
+    &.border-grey-11 {
+      border: none;
+  
+      &.q-btn--outline  {
+        &.q-hoverable:hover .q-focus-helper {
+          background: #A8ACC3;
+        }
+  
+        .q-btn__wrapper:before {
+          border: 1px solid #A8ACC3;
+        }
+      }
+    }
+  
+    &.square {
+      .q-btn__wrapper {
+        min-width: 36px;
+        min-height: 36px;
+        padding: 10px;
+      }
+    }
+
+    .q-btn__wrapper:before {
+        box-shadow: none;
+      }
+  }
+ 
+
+  .flat-button {
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 14px;
+  
+    &:hover {
+      .q-focus-helper {
+        background: none !important;
+        // color: #BEBAFF !important;
+      }
+    }
+ 
+  }
+  
+
+/* @input-field @인풋 */
 .q-field {
     input::placeholder {
       color: #A8ACC3;
