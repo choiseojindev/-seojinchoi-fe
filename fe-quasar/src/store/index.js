@@ -1,19 +1,21 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
+import Vue from "vue";
+import Vuex from "vuex";
 
 // Modules
 import auth from "./module-auth";
+import view from "./module-view";
 
-Vue.use(Vuex)
+Vue.use(Vuex);
 
 const Store = new Vuex.Store({
   modules: {
     auth,
+    view,
   },
 
   // enable strict mode (adds overhead!)
   // for dev mode only
-  strict: process.env.DEBUGGING
+  strict: process.env.DEBUGGING,
 });
 export const useStore = function (/* { ssrContext } */) {
   return Store;
