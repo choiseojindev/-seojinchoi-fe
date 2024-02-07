@@ -1,107 +1,98 @@
 <template>
-  <div class="wrap">
-    <div class="header">
-      <!-- 헤더 -->
-      <!-- logo-devchoiseojin -->
-      <img
-        alt="logo"
-        src="~assets/logo-devchoiseojin.png"
-        style="height: 40px"
-      />
-    </div>
-    <div class="content">
-      <div class="login-wrap">
-        <div class="login-header">
-          <div class="title">Login</div>
-          <div class="sub-title">
-            Hi, Welcome back to
-            <span :style="'color : #1B0182'">devchoiseojin</span> 👋
-          </div>
+  <Layout>
+    <div class="login-wrap">
+      <div class="login-header">
+        <div class="title">로그인</div>
+        <div class="sub-title">
+          <span :style="'color : #1B0182'">devchoiseojin</span>
+          에 오신 걸 환영합니다 👋
         </div>
-        <div class="login-contents">
-          <div class="input-wrap">
-            <!-- TODO: input-wrap 컴포넌트화 -->
-            <div>Email</div>
-            <q-input
-              outlined
-              v-model="user.form.email"
-              dense
-              placeholder="e.g. choiseojindev@gmail.com"
-            />
-          </div>
-
-          <div class="input-wrap">
-            <!-- TODO: input-wrap 컴포넌트화 -->
-            <div>Password</div>
-            <!-- <q-input outlined v-model="text"  dense placeholder="enter your password"/> -->
-            <q-input
-              v-model="user.form.password"
-              outlined
-              :type="user.isPassword ? 'password' : 'text'"
-              dense
-              placeholder="enter your password"
-            >
-              <template v-slot:append>
-                <q-icon
-                  :name="user.isPassword ? 'visibility_off' : 'visibility'"
-                  class="cursor-pointer"
-                  @click="user.isPassword = !user.isPassword"
-                />
-              </template>
-            </q-input>
-          </div>
-
-          <div class="manage-account">
-            <q-checkbox
-              class="remember"
-              v-model="user.isRemeberEmail"
-              label="Remember Email?"
-              dense
-              @click="user.isRemeberEmail = !user.isRemeberEmail"
-            />
-            <q-btn
-              flat
-              dense
-              color="primary"
-              label="Forgot Password?"
-              class="flat-button"
-            />
-            <!-- <div class="forgot">Forgot Password?</div> -->
-          </div>
-
-          <div class="submit-login">
-            <q-btn
-              type="submit"
-              color="primary"
-              label="Login"
-              class="full-width"
-            />
-          </div>
+      </div>
+      <div class="login-contents">
+        <div class="input-wrap">
+          <div>이메일</div>
+          <q-input
+            outlined
+            v-model="user.form.email"
+            dense
+            placeholder="choiseojindev@gmail.com"
+          />
         </div>
 
-        <div class="login-footer">
-          <span>Not registered yet?</span>
+        <div class="input-wrap">
+          <div>비밀번호</div>
+          <!-- <q-input outlined v-model="text"  dense placeholder="enter your password"/> -->
+          <q-input
+            v-model="user.form.password"
+            outlined
+            :type="user.isPassword ? 'password' : 'text'"
+            dense
+            placeholder="비밀번호를 입력해 주세요."
+          >
+            <template v-slot:append>
+              <q-icon
+                :name="user.isPassword ? 'visibility_off' : 'visibility'"
+                class="cursor-pointer"
+                @click="user.isPassword = !user.isPassword"
+              />
+            </template>
+          </q-input>
+        </div>
+
+        <div class="manage-account">
+          <q-checkbox
+            class="remember"
+            v-model="user.isRemeberEmail"
+            label="이메일을 기억하시겠습니까?"
+            dense
+            @click="user.isRemeberEmail = !user.isRemeberEmail"
+          />
           <q-btn
             flat
             dense
             color="primary"
-            label="Create an account"
+            label="비밀번호 찾기"
             class="flat-button"
-            @click="createAccount"
+          />
+          <!-- <div class="forgot">Forgot Password?</div> -->
+        </div>
+
+        <div class="submit-login">
+          <q-btn
+            type="submit"
+            color="primary"
+            label="로그인"
+            class="full-width"
           />
         </div>
       </div>
+
+      <div class="login-footer">
+        <span>아직 계정이 없으신가요?</span>
+        <q-btn
+          flat
+          dense
+          color="primary"
+          label="계정 생성"
+          class="flat-button"
+          @click="createAccount"
+        />
+      </div>
     </div>
-  </div>
+  </Layout>
 </template>
 
 <script>
 import { ref, reactive, computed, onMounted } from "vue";
 import { useRouter } from "src/router";
+import Layout from "layouts/MainLayout.vue";
 
 const router = useRouter();
 
 export default {
+  components: {
+    Layout,
+  },
   setup() {
     let user = reactive({
       form: {
@@ -112,6 +103,11 @@ export default {
       isPassword: true,
     });
 
+    /**
+     * 계정 생성 페이지로 이동
+     * @since 2024.02.07
+     * @author sjchoi
+     */
     let createAccount = () => {
       router.push({ name: "createAccount" }).catch(() => {});
     };
@@ -198,9 +194,10 @@ export default {
       .login-footer {
         width: 100%;
         display: flex;
-        // justify-content: flex-end;
-        justify-content: center;
+        justify-content: flex-end;
+        // justify-content: center;
         align-items: center;
+        gap: 4px;
       }
     }
   }
