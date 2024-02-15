@@ -1,0 +1,140 @@
+/* pci : petra custom icon */
+.pci {
+  user-select: none;
+  cursor: inherit;
+  font-size: inherit;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  vertical-align: middle;
+}
+
+i[class^="custom-icon-"],
+i[class*=" custom-icon-"],
+span[class^="custom-icon-"],
+span[class*="custom-icon-"] {
+  /* width: 1rem;
+  height: 1rem; */
+}
+i[class^="custom-icon-"]:before,
+i[class*=" custom-icon-"]:before,
+span[class^="custom-icon-"]:before,
+span[class*="custom-icon-"]:before {
+  content: "";
+  width: inherit;
+  height: inherit;
+  background-color: currentColor;
+  mask-size: 100% 100%;
+  font-style: normal;
+  font-weight: normal !important;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.custom-icon-circle:before {
+  mask-image: url("~assets/icons/circle.png");
+}
+.custom-icon-circle-outline:before {
+  mask-image: url("~assets/icons/circle-outline.png");
+}
+.custom-icon-settings:before {
+  mask-image: url("~assets/icons/settings.png");
+}
+.custom-icon-database:before {
+  mask-image: url("~assets/icons/database.png");
+}
+.custom-icon-database-lock:before {
+  mask-image: url("~assets/icons/database-lock.png");
+}
+.custom-icon-database-shield:before {
+  mask-image: url("~assets/icons/database-shield.png");
+  height: 17px !important;
+}
+.custom-icon-audit-log:before {
+  mask-image: url("~assets/icons/audit-log.png");
+}
+.custom-icon-request-permission:before {
+  mask-image: url("~assets/icons/request-permission.png");
+}
+.custom-icon-certification:before {
+  mask-image: url("~assets/icons/certification.png");
+}
+.custom-icon-access-control:before {
+  mask-image: url("~assets/icons/access-control.png");
+}
+.custom-icon-authority:before {
+  mask-image: url("~assets/icons/authority.png");
+}
+.custom-icon-securityTarget-all:before {
+  background-image: url("~assets/icons/securityTarget-all.png");
+  background-size: cover;
+  background-color: transparent !important;
+}
+
+.custom-icon-securityTarget-postgresql:before {
+  background-image: url("~assets/databases/postgresql.png");
+  background-size: cover;
+  background-color: transparent !important;
+}
+.custom-icon-securityTarget-mongodb:before {
+  background-image: url("~assets/databases/mongodb.png");
+  background-size: cover;
+  background-color: transparent !important;
+}
+.custom-icon-securityTarget-mysql:before {
+  background-image: url("~assets/databases/mysql.png");
+  background-size: cover;
+  background-color: transparent !important;
+}
+.custom-icon-securityTarget-oracle:before {
+  background-image: url("~assets/databases/oracle.png");
+  background-size: cover;
+  background-color: transparent !important;
+}
+.custom-icon-all:before {
+  background-image: url("~assets/icons/all-icon.png");
+  background-size: cover;
+  background-color: transparent !important;
+}
+.custom-icon-include:before {
+  background-image: url("~assets/icons/include-icon.png");
+  background-size: cover;
+  background-color: transparent !important;
+}
+
+.custom-icon-sameAs:before {
+  background-image: url("~assets/icons/sameAs-icon.png");
+  background-size: cover;
+  background-color: transparent !important;
+}
+
+.custom-icon-object-group-pattern:before {
+  background-image: url("~assets/icons/object-group-pattern.png");
+  background-size: cover;
+  background-color: transparent !important;
+}
+
+.custom-icon-object-group-document:before {
+  background-image: url("~assets/icons/object-group-document.png");
+  background-size: cover;
+  background-color: transparent !important;
+}
+
+.custom-icon-object-group-sql:before {
+  background-image: url("~assets/icons/object-group-sql.png");
+  background-size: cover;
+  background-color: transparent !important;
+}
+
+.custom-icon-authority-revoke:before {
+  background-image: url("~assets/icons/authority-revoke.png");
+  background-size: cover;
+  background-color: transparent !important;
+}
+
+.custom-icon-crown:before {
+  mask-image: url("~assets/icons/crown.png");
+}

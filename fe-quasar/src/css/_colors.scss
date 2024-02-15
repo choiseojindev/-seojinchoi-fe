@@ -1,0 +1,80 @@
+// PALETTE
+$color-dark: #495057;
+$color-dark-active: #353c43;
+$color-dark-light: #e2e3e4;
+$color-dark-light-more: #f0f1f2;
+$color-secondary: #646a70;
+$color-secondary-active: #50565c;
+$color-secondary-light: #e6e7e8;
+$color-secondary-light-more: #f3f3f4;
+
+// $color-primary: #6b60ff; // v3
+// $color-primary: #7260ff; // v2 7e43ff
+$color-primary: #5d5bd4; // v1
+$color-primary-active: #4947c0;
+$color-primary-light: #e5e5f8;
+$color-primary-light-more: #f2f2fc;
+
+$color-positive: #37cb7b;
+$color-positive-active: #23b767;
+$color-positive-light: #dff7ea;
+$color-positive-light-more: #effbf4;
+$color-negative: #fd6545;
+$color-negative-active: #e95131;
+$color-negative-light: #ffe6e1;
+$color-negative-light-more: #fff3f0;
+$color-info: #23b2e0;
+$color-info-active: #19a8d6;
+$color-info-light: #dcf3fa;
+$color-info-light-more: #edf9fd;
+$color-warning: #ffc800;
+$color-warning-active: #ebb400;
+$color-warning-light: #fff6d6;
+$color-warning-light-more: #fffbeb;
+$color-warning-2: #ffa260;
+$color-warning-2-active: #eb8e4c;
+$color-warning-2-light: #fff0e6;
+$color-warning-2-light-more: #fff8f2;
+
+$color-white: #ffffff;
+$color-black: #000000;
+$color-accent: #d4ff61;
+
+// GRAYSCALE PALETTE
+$color-gray-900: #3d3d3d;
+$color-gray-800: #4a4a4a;
+$color-gray-700: #5f5f5f;
+$color-gray-600: #6d6d6d;
+$color-gray-500: #878787;
+$color-gray-400: #a8a8a8;
+$color-gray-300: #cacaca;
+$color-gray-200: #dfdfdf;
+$color-gray-100: #efefef;
+$color-gray-50: #f7f7f7;
+
+$color-border: #e6e7e8;
+
+// MENU
+$color-menu-bg-color: #222730;
+$color-menu-item-color: rgba($color-primary, 0);
+$color-menu-item-bg-color-hover: rgba($color-primary, 0.24);
+$color-menu-item-bg-color-active: rgba($color-primary, 0.16);
+$color-menu-link-bg-color-hover: rgba($color-primary, 0.24);
+$color-menu-link-bg-color-active: rgba($color-primary, 0.16);
+
+// CONTENT
+$color-body-bg: #f8f9fa;
+$color-text: #495057;
+$color-heading-text: #35495e;
+
+// LINKS
+$color-link-text: #39a275;
+$color-link-text-active: $color-text;
+
+// INPUTS
+$color-input-border: lighten($color-heading-text, 50%);
+
+// BUTTONS
+$color-button-bg: $color-link-text;
+$color-button-disabled-bg: darken(desaturate($color-button-bg, 20%), 10%);
+$color-button-text: white;

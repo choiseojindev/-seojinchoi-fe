@@ -1,3 +1,7 @@
+@import "colors";
+// @import "fonts";
+@import "sizes";
+
 // Quasar SCSS (& Sass) Variables
 // --------------------------------------------------
 // To customize the look and feel of this app, you can override
@@ -12,14 +16,53 @@
 // to match your app's branding.
 // Tip: Use the "Theme Builder" on Quasar's documentation website.
 
-$primary   : #3F38FF;
-$secondary : #26A69A;
-$accent    : #9C27B0;
+$body-font-size: 14px;
 
-$dark      : #1D1D1D;
-$dark-page : #121212;
+$primary: $color-primary;
+$secondary: $color-secondary;
+$accent: $color-accent; // 라임 계열 테스트 색상 : #B9FF61 / #C1FF61 / #D4FF61
 
-$positive  : #21BA45;
-$negative  : #C10015;
-$info      : #31CCEC;
-$warning   : #F2C037;
+// used by dark mode
+$dark: $color-dark;
+$dark-page: #121212;
+
+$positive: $color-positive;
+$negative: $color-negative;
+$info: $color-info;
+$warning: $color-warning;
+
+$separator-color: $color-border;
+
+$shadow-color: $color-gray-600;
+
+$generic-border-radius: 6px;
+
+$button-border-radius: 6px;
+// $button-padding: 12px 20px;
+$button-padding: 10px 16px;
+// $button-dense-padding: 8px 16px;
+$button-font-size: 14px;
+$button-line-height: 1rem;
+// $button-shadow: $color-gray-200;
+
+$layout-shadow: 0 0 10px 2px rgba($color-dark, 0.05),
+  0 0px 10px rgba($color-dark, 0.06);
+
+$input-font-size: 14px;
+$input-text-color: $color-dark;
+$input-label-color: $color-gray-400;
+
+/* ------------------------------------------------------------- */
+
+// https://v1.quasar.dev/style/color-palette
+$grey: $color-gray-50;
+$grey-1: $color-gray-100;
+$grey-2: $color-gray-200;
+$grey-3: $color-gray-300;
+$grey-4: $color-gray-400;
+$grey-5: $color-gray-500;
+$grey-6: $color-gray-600;
+$grey-7: $color-gray-700;
+$grey-8: $color-gray-800;
+$grey-9: $color-gray-900;
+$grey-11: $color-border;

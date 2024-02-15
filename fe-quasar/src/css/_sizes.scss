@@ -1,0 +1,32 @@
+// GRID
+$size-grid-padding: 1.5rem;
+$size-grid-dense-padding: 1rem;
+
+// LAYOUT
+$size-layout-aside-header-height: 40px;
+$size-layout-aside-space-y: 16px;
+$size-layout-main-aside-width: 56px;
+$size-layout-sub-aside-width: 250px;
+$size-layout-page-header-height: 36px;
+$size-layout-page-footer-height: 28px;
+
+// CONTENT
+$size-content-width-max: 50rem;
+$size-content-width-min: 25rem;
+
+// INPUTS
+$size-input-min-height: 40px;
+$size-input-dense-min-height: 36px;
+// $size-input-dense-min-height: 32px;
+$size-input-padding-vertical: 0.75rem;
+$size-input-padding-horizontal: 1.125rem;
+$size-input-padding: $size-input-padding-vertical $size-input-padding-horizontal;
+$size-input-border: 1px;
+$size-input-border-radius: 0.313rem;
+
+// BUTTONS
+$size-button-padding-vertical: $size-grid-padding * 0.5;
+$size-button-padding-horizontal: calc($size-grid-padding / 1.313);
+$size-button-padding: $size-button-padding-vertical
+  $size-button-padding-horizontal;
+$size-button-border-radius: 0.313rem;

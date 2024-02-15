@@ -91,4 +91,29 @@ p {
   }
 }
 
-//   A8ACC3
+/* toast message color */
+.q-notifications {
+  .positive {
+    background: $color-positive-light-more !important;
+    border-radius: 4px;
+    border-left: 4px solid $color-positive;
+  }
+
+  .info {
+    background: $color-info-light-more !important;
+    border-radius: 4px;
+    border-left: 4px solid $color-info;
+  }
+
+  .warning {
+    background: $color-warning-light-more !important;
+    border-radius: 4px;
+    border-left: 4px solid $color-warning;
+  }
+
+  .negative {
+    background: $color-negative-light-more !important;
+    border-radius: 4px;
+    border-left: 4px solid $color-negative;
+  }
+}

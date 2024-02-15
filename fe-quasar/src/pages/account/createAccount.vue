@@ -13,14 +13,6 @@
             class="step-box"
             :class="stepper.step > 1 ? 'active-step' : ''"
           />
-          <div
-            class="step-box"
-            :class="stepper.step > 2 ? 'active-step' : ''"
-          />
-          <div
-            class="step-box"
-            :class="stepper.step > 3 ? 'active-step' : ''"
-          />
         </div>
 
         <!-- 안내 메시지 -->
@@ -86,6 +78,145 @@
             label="다음"
           />
         </form>
+
+        <!-- step 2: 계정 정보 입력 -->
+        <form
+          v-if="stepper.step === 2"
+          class="inputAccountInformation form-wrap"
+          @submit.prevent="submitInputAccountInformation"
+        >
+          <!-- 이메일 -->
+          <div :class="`${v$.id.$invalid ? 'invalid' : 'valid'}`" class="field">
+            <div class="field-label">이메일</div>
+            <q-input
+              v-model="user.form.id"
+              :error="v$.id.$invalid"
+              class="field-input"
+              ref="id"
+              dense
+              outlined
+            >
+              <template #error>{{ v$.id.$errors[0].$message }} </template>
+            </q-input>
+          </div>
+
+          <!-- 비밀번호, 비밀번호 조건 -->
+          <div class="password-wrap">
+            <!-- 비밀번호 -->
+            <div
+              :class="`${v$.password.$invalid ? 'invalid' : 'valid'}`"
+              class="field"
+            >
+              <div class="field-label">비밀번호</div>
+              <q-input
+                v-model="user.form.password"
+                :type="user.isPassword ? 'password' : 'text'"
+                :error="v$.password.$invalid"
+                class="field-input"
+                ref="password"
+                dense
+                outlined
+                autocomplete="new-password"
+                @input="inputPassword"
+              >
+                <template #error
+                  >{{ v$.password.$errors[0].$message }}
+                </template>
+                <template #append>
+                  <i
+                    :class="`${
+                      user.isPassword ? 'fi fi-rr-eye-crossed' : 'fi fi-rr-eye'
+                    }`"
+                    class="cursor-pointer"
+                    @click="user.isPassword = !user.isPassword"
+                  />
+                </template>
+              </q-input>
+            </div>
+
+            <!-- 비밀번호 조건 -->
+            <PasswordCondition
+              :password="user.form.password"
+              @isValid="verifyCondition"
+            />
+          </div>
+
+          <!-- 비밀번호 확인 -->
+          <div
+            :class="`${v$.confirmPassword.$invalid ? 'invalid' : 'valid'}`"
+            class="field"
+          >
+            <div class="field-label">비밀번호 확인</div>
+            <q-input
+              v-model="user.form.confirmPassword"
+              :type="user.isConfirmPassword ? 'password' : 'text'"
+              :error="v$.confirmPassword.$invalid"
+              class="field-input"
+              ref="confirmPassword"
+              dense
+              outlined
+              @input="inputConfirmPassword"
+            >
+              <template #error
+                >{{ v$.confirmPassword.$errors[0].$message }}
+              </template>
+              <template #append>
+                <i
+                  :class="`${
+                    user.isConfirmPassword
+                      ? 'fi fi-rr-eye-crossed'
+                      : 'fi fi-rr-eye'
+                  }`"
+                  class="cursor-pointer"
+                  @click="user.isConfirmPassword = !user.isConfirmPassword"
+                />
+              </template>
+            </q-input>
+          </div>
+
+          <!-- 이름 -->
+          <div
+            :class="`${v$.name.$invalid ? 'invalid' : 'valid'}`"
+            class="field"
+          >
+            <div class="field-label">이름</div>
+            <q-input
+              v-model="user.form.name"
+              :error="v$.name.$invalid"
+              class="field-input"
+              ref="name"
+              dense
+              outlined
+            >
+              <template #error>{{ v$.name.$errors[0].$message }} </template>
+            </q-input>
+          </div>
+
+          <!-- error message -->
+          <q-banner
+            v-if="inputAccountInformationError.hasError"
+            class="message-wrap bg-negative-light-more"
+            inline-actions
+          >
+            <div class="message-content text-negative">
+              <i class="fi-rr-comment-xmark" />
+              <span class="message">
+                <p
+                  v-for="(sentence, index) in accountInformationParsedMessage"
+                  :key="`sentence-${index}`"
+                >
+                  {{ sentence }}
+                </p>
+              </span>
+            </div>
+          </q-banner>
+          <q-btn
+            class="createAccountButton"
+            type="submit"
+            color="primary"
+            label="다음"
+          />
+        </form>
       </div>
 
       <!-- 버튼 하단 안내 텍스트  -->
@@ -104,24 +235,11 @@
             @click="routeToLogin"
           />
         </div>
-
-        <!-- 인증 번호 메일 다시 보내기 버튼 -->
-        <div
-          v-if="stepper.step === 3"
-          class="create-account flex align-items-center justify-content-center"
-        >
-          <p class="create-text m-0">이메일을 확인할 수 없나요?</p>
-          <p class="create-text m-0">스팸 편지함 확인 또는</p>
-          <q-btn
-            class="text-button"
-            flat
-            color="primary"
-            label="인증 번호 메일 다시 보내기"
-            @click="resendCertificationCode"
-          />
-        </div>
       </div>
     </div>
+
+    <!-- 토스트 메시지  -->
+    <ToastMessage ref="toastMessage" />
   </Layout>
 </template>
 
@@ -132,14 +250,14 @@ import { ref, reactive, computed } from "vue";
 import { useStore } from "src/store";
 import { useRouter } from "src/router";
 // import { filterSplitUpText } from "src/utils/filter";
-// import { useVuelidate } from "@vuelidate/core";
-// import { helpers, required } from "@vuelidate/validators";
-// import { getInvalidRefElement } from "src/utils/validation";
+import { useVuelidate } from "@vuelidate/core";
+import { helpers, required } from "@vuelidate/validators";
+import { getInvalidRefElement } from "src/utils/validation";
 // import { api_cloud_user, api_policy, base_api_policy } from "boot/axios";
-// import PasswordCondition from "components/Password/PasswordCondition";
+import PasswordCondition from "components/PasswordCondition";
 // import accountAPI from "src/services/account.js";
 // import authAPI from "src/services/auth.js";
-// import ToastMessage from "components/ToastMessage";
+import ToastMessage from "components/ToastMessage";
 
 import Layout from "layouts/MainLayout.vue";
 
@@ -148,8 +266,8 @@ const router = useRouter();
 export default {
   components: {
     Layout,
-    // PasswordCondition,
-    // ToastMessage,
+    PasswordCondition,
+    ToastMessage,
   },
   setup() {
     const store = useStore();
@@ -186,14 +304,22 @@ export default {
       i18n.locale = code || languageOptions[0].code;
     };
 
+    /**
+     * 로그인 페이지로 이동
+     * @since 2023.09.05
+     * @author sjchoi
+     */
+    let routeToLogin = () => {
+      store.dispatch("view/setStep", 1);
+      router.push({ name: "login" }).catch(() => {});
+    };
+
     /* -- step 설정 -- */
     let stepper = reactive({
       step: computed(() => store?.state?.view.step),
       contents: [
         { step: 1, message: "계정 서비스 약관에 동의해 주세요." },
-        { step: 2, message: "PETRA 계정으로 사용할 정보를 입력해 주세요." },
-        { step: 3, message: "PETRA 계정 이메일 인증을 진행해 주세요." },
-        { step: 4, message: "PETRA 서비스 별칭을 입력해 주세요." },
+        { step: 2, message: "계정으로 사용할 정보를 입력해 주세요." },
       ],
     });
 
@@ -290,7 +416,7 @@ export default {
      * @author sjchoi
      */
     let submitAgreeTerms = () => {
-      //   store.dispatch("view/setStep", 2);
+      store.dispatch("view/setStep", 2);
     };
 
     /* -- step 2. 계정 정보 입력 -- */
@@ -300,7 +426,6 @@ export default {
         name: "",
         password: "",
         confirmPassword: "",
-        corporation: "",
         certificationCode: "",
         certifyServiceAlias: "",
       },
@@ -324,97 +449,51 @@ export default {
     let isDuplicatedEmail = ref(false);
     let isWorngFormatEmail = ref(false);
 
-    /**
-     * 포커스 아웃 시, 이메일 중복 여부 체크
-     * @since 2023.09.06
-     * @author sjchoi
-     */
-    let checkEmaillDuplication = async () => {
-      console.log("## 이메일 포커스 아웃");
-      // 초기화
-      // v$.value.id.$reset()
-      isDuplicatedEmail.value = false;
-      isWorngFormatEmail.value = false;
-
-      const validator = v$.value.id;
-      validator.$validate();
-
-      // NOTICE: 포커스 아웃될 때 마다 중복 및 형식 검사 진행해야하므로, invalid 상태에서도 api 호출 진행
-
-      if (user.form.id === "") {
-        // 비어있을 시 포커스 아웃될 때 중복 여부 체크 X
-        return;
-      }
-
-      accountAPI
-        .confirmEmailDuplication(user.form.id)
-        .then((data) => {
-          // console.log("##성공 ", data);
-
-          // 이메일 중복인 경우
-          isDuplicatedEmail.value = data.data.duplicated === true;
-        })
-        .catch((error) => {
-          // console.log("##실패 ", error);
-          const WRONG_EMAIL_FORMAT_CODE = -40219;
-
-          // 잘못된 이메일 형식
-          isWorngFormatEmail.value = error.code === WRONG_EMAIL_FORMAT_CODE;
-        })
-        .finally(() => {
-          //
-        });
+    /* step 2 유효성 */
+    let rules = {
+      id: {
+        required: helpers.withMessage("이메일을 입력해 주세요.", required),
+        duplicated: helpers.withMessage("이미 등록된 이메일입니다.", () => {
+          return !isDuplicatedEmail.value;
+        }),
+        format: helpers.withMessage("이메일 형식이 올바르지 않습니다.", () => {
+          return !isWorngFormatEmail.value;
+        }),
+      },
+      password: {
+        required: helpers.withMessage("비밀번호를 입력해 주세요.", required),
+        valid: helpers.withMessage(
+          "비밀번호 조건에 맞지 않습니다. 다시 입력해 주세요.",
+          () => {
+            return isSatisfyAllPasswordConditions.value;
+          }
+        ),
+      },
+      confirmPassword: {
+        required: helpers.withMessage(
+          "비밀번호 확인을 입력해 주세요.",
+          required
+        ),
+        sameAs: helpers.withMessage(
+          "비밀번호와 다릅니다. 입력 값을 확인해 주세요.",
+          () => {
+            return isSameAsPassword.value;
+          }
+        ),
+      },
+      name: {
+        required: helpers.withMessage("이름을 입력해 주세요.", required),
+      },
     };
 
-    /* step 2 유효성 */
-    // let rules = {
-    //   id: {
-    //     required: helpers.withMessage("이메일을 입력해 주세요.", required),
-    //     duplicated: helpers.withMessage("이미 등록된 이메일입니다.", () => {
-    //       return !isDuplicatedEmail.value;
-    //     }),
-    //     format: helpers.withMessage("이메일 형식이 올바르지 않습니다.", () => {
-    //       return !isWorngFormatEmail.value;
-    //     }),
-    //   },
-    //   password: {
-    //     required: helpers.withMessage("비밀번호를 입력해 주세요.", required),
-    //     valid: helpers.withMessage(
-    //       "비밀번호 조건에 맞지 않습니다. 다시 입력해 주세요.",
-    //       () => {
-    //         return isSatisfyAllPasswordConditions.value;
-    //       }
-    //     ),
-    //   },
-    //   confirmPassword: {
-    //     required: helpers.withMessage(
-    //       "비밀번호 확인을 입력해 주세요.",
-    //       required
-    //     ),
-    //     sameAs: helpers.withMessage(
-    //       "비밀번호와 다릅니다. 입력 값을 확인해 주세요.",
-    //       () => {
-    //         return isSameAsPassword.value;
-    //       }
-    //     ),
-    //   },
-    //   name: {
-    //     required: helpers.withMessage("이름을 입력해 주세요.", required),
-    //   },
-    //   // NOTICE: 회사명 필수 ??
-    //   corporation: {
-    //     required: helpers.withMessage("회사명을 입력해 주세요.", required),
-    //   },
-    // };
-
-    // const v$ = useVuelidate(
-    //   rules,
-    //   user.form,
-    //   {
-    //     $lazy: true,
-    //   },
-    //   { $scope: false }
-    // );
+    const v$ = useVuelidate(
+      rules,
+      user.form,
+      {
+        $lazy: true,
+      },
+      { $scope: false }
+    );
 
     let isSameAsPassword = ref(false);
     let isSatisfyAllPasswordConditions = ref(false);
@@ -451,47 +530,28 @@ export default {
      * @since 2023.07.31
      * @author sjchoi
      */
-    // let submitInputAccountInformation = async (event) => {
-    //   const validator = v$.value;
-    //   validator.$validate();
+    let submitInputAccountInformation = async (event) => {
+      const validator = v$.value;
+      validator.$validate();
 
-    //   const isValid = await !v$.value.$error;
+      const isValid = await !v$.value.$error;
 
-    //   if (!isValid) {
-    //     const $el = getInvalidRefElement(validator, refs);
+      if (!isValid) {
+        const $el = getInvalidRefElement(validator, refs);
 
-    //     // 유효성 포커싱
-    //     $el.focus();
+        // 유효성 포커싱
+        $el.focus();
 
-    //     return;
-    //   }
+        return;
+      }
 
-    //   /* 에러 메시지 초기화 */
-    //   inputAccountInformationError.hasError = false;
-    //   inputAccountInformationError.message = "";
-
-    //   // 로딩
-    //   Loading.show();
-
-    //   accountAPI
-    //     .createAdminAccount(user.form)
-    //     .then((data) => {
-    //       // console.log("##성공 ", data);
-
-    //       store.dispatch("auth/setEmail", user.form.id);
-    //       store.dispatch("view/setStep", 3);
-    //     })
-    //     .catch((error) => {
-    //       // console.log("##실패 ", error);
-
-    //       inputAccountInformationError.hasError = true;
-    //       inputAccountInformationError.message = error.message;
-    //     })
-    //     .finally(() => {
-    //       Loading.hide();
-    //       //
-    //     });
-    // };
+      // 로그인 페이지로 이동
+      routeToLogin();
+      refs.toastMessage.value.setToastMessage(
+        "positive",
+        "계정이 성공적으로 생성되었습니다."
+      );
+    };
 
     /**
      * 특수 문자 포함 조건
@@ -589,16 +649,6 @@ export default {
     );
 
     /**
-     * 로그인 페이지로 이동
-     * @since 2023.09.05
-     * @author sjchoi
-     */
-    let routeToLogin = () => {
-      //   store.dispatch("view/setStep", 1);
-      router.push({ name: "login" }).catch(() => {});
-    };
-
-    /**
      * 인증 번호 메일 다시 보내기
      * @since 2023.09.06
      * @author sjchoi
@@ -622,7 +672,7 @@ export default {
 
     return {
       ...refs,
-      //   v$,
+      v$,
       //   v2$,
       //   v3$,
       user,
@@ -631,7 +681,7 @@ export default {
       accountInformationParsedMessage,
       certifyEmailParsedMessage,
       certifyAliasParsedMessage,
-      //   submitInputAccountInformation,
+      submitInputAccountInformation,
       languageOptions,
       currentLanguage,
       setLanguage,
@@ -650,17 +700,7 @@ export default {
       //   maximumLengthCertificationCode,
       //   resendCertificationCode,
       possibleServiceAlias,
-      checkEmaillDuplication,
       certifyAliasError,
-
-      // NOTE: 프리 로딩 테스트 코드
-      preLoadingTest() {
-        Loading.show();
-
-        setTimeout(() => {
-          Loading.hide();
-        }, 3000);
-      },
     };
   },
 };
@@ -695,7 +735,7 @@ export default {
       display: flex;
 
       .step-box {
-        width: 25%;
+        width: 50%;
         height: 100%;
         background-color: #cacaca;
       }
