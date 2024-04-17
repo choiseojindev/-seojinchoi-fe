@@ -191,9 +191,21 @@ module.exports = function (/* ctx */) {
       // More info: https://v1.quasar.dev/quasar-cli/developing-electron-apps/node-integration
       nodeIntegration: true,
 
-      extendWebpack(/* cfg */) {
-        // do something with Electron main process Webpack cfg
-        // chainWebpack also available besides this extendWebpack
+      // Quasar CLI에서 생성된 Webpack 구성 확장 - Webpack 구성 개체에 직접 액세스
+      extendWebpack(cfg, { isServer, isClient }) {
+        cfg.resolve.alias = {
+          ...cfg.resolve.alias, // This adds the existing alias
+
+          // Add your own alias like this
+          store: resolveSrc("./src/store"),
+          services: resolveSrc("./src/services"),
+          utils: resolveSrc("./src/utils"),
+        };
+        cfg.module.rules.push({
+          resourceQuery: /blockType=i18n/,
+          type: "javascript/auto",
+          use: [{ loader: "@kazupon/vue-i18n-loader" }],
+        });
       },
     },
   };

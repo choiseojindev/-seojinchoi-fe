@@ -47,7 +47,7 @@
             </q-input>
           </div>
 
-          <div class="manage-account">
+          <!-- <div class="manage-account">
             <q-checkbox
               class="remember"
               v-model="user.isRemeberEmail"
@@ -62,8 +62,7 @@
               label="비밀번호 찾기"
               class="flat-button"
             />
-            <!-- <div class="forgot">Forgot Password?</div> -->
-          </div>
+          </div> -->
 
           <div class="submit-login">
             <q-btn
@@ -167,6 +166,7 @@ export default {
       }
 
       //   TODO: 메인 페이지로 라우터 연결
+      router.push({ name: "test" }).catch(() => {});
     };
 
     /**
